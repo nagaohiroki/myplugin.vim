@@ -15,7 +15,6 @@ let g:myplugin_path=expand('<sfile>:p:h')
 function! GetWorkingPath()
 	if has('python')
 		" project root path python ver
-		"let l:python_path=expand('<sfile>:p:h') . '/working_path.py'
 		execute 'pyf ' . g:myplugin_path . '/working_path.py'
 		let g:working_path=py_working_path
 	else

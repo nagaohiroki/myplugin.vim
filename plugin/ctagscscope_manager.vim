@@ -8,6 +8,7 @@ scriptencoding utf-8
 " .git,.svn—¼•û‚ª‚ ‚éê‡svn‚ª—Dæ‚³‚ê‚é
 " windowsŠÂ‹«‚Ì‚İ‚ÅŠm”F
 
+" echo globpath(&rtp, 'working_path.py')
 
 " ----------------------------------------------------------------------
 " project root path
@@ -15,7 +16,7 @@ scriptencoding utf-8
 function! GetWorkingPath()
 	if has('python')
 		" project root path python ver
-		pyf $VIM/working_path.py
+		execute 'pyf ' . expand('%:p:h') . '/working_path.py'
 		let g:working_path=py_working_path
 	else
 		let l:git_root_path=substitute(system('git rev-parse --show-toplevel'),'\n',"","g")

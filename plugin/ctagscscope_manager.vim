@@ -1,22 +1,22 @@
-scriptencoding utf-8
+ï»¿scriptencoding utf-8
  
 " @brief
-" ctags‚Æcscope‚ğ.svn .git‚Æ“¯‚¶ŠK‘w‚É¶¬A”jŠü‚ğ‚·‚éƒvƒ‰ƒOƒCƒ“
+" ctagsã¨cscopeã‚’.svn .gitã¨åŒã˜éšå±¤ã«ç”Ÿæˆã€ç ´æ£„ã‚’ã™ã‚‹ãƒ—ãƒ©ã‚°ã‚¤ãƒ³
 "
 " @note
-" git‚©svn‚ªƒCƒ“ƒXƒg[ƒ‹‚³‚ê‚Ä‚¢‚éê‡‚Ì‚İ‹@”\‚·‚é
-" .git,.svn—¼•û‚ª‚ ‚éê‡svn‚ª—Dæ‚³‚ê‚é
-" windowsŠÂ‹«‚Ì‚İ‚ÅŠm”F
+" gitã‹svnãŒã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã•ã‚Œã¦ã„ã‚‹å ´åˆã®ã¿æ©Ÿèƒ½ã™ã‚‹
+" .git,.svnä¸¡æ–¹ãŒã‚ã‚‹å ´åˆsvnãŒå„ªå…ˆã•ã‚Œã‚‹
+" windowsç’°å¢ƒã®ã¿ã§ç¢ºèª
 
-" echo globpath(&rtp, 'working_path.py')
-
+let g:myplugin_path=expand('<sfile>:p:h')
 " ----------------------------------------------------------------------
 " project root path
 " ---------------------------------------------------------------------
 function! GetWorkingPath()
 	if has('python')
 		" project root path python ver
-		execute 'pyf ' . expand('%:p:h') . '/working_path.py'
+		"let l:python_path=expand('<sfile>:p:h') . '/working_path.py'
+		execute 'pyf ' . g:myplugin_path . '/working_path.py'
 		let g:working_path=py_working_path
 	else
 		let l:git_root_path=substitute(system('git rev-parse --show-toplevel'),'\n',"","g")
@@ -40,7 +40,7 @@ function! CtagsEditor( opt )
 
 	call GetWorkingPath()
 	if g:working_path == ''
-		echo 'ì‹ÆƒtƒHƒ‹ƒ_“à‚Ìƒtƒ@ƒCƒ‹‚Å‚Í‚ ‚è‚Ü‚¹‚ñ g:working_path = ' . g:working_path
+		echo 'ä½œæ¥­ãƒ•ã‚©ãƒ«ãƒ€å†…ã®ãƒ•ã‚¡ã‚¤ãƒ«ã§ã¯ã‚ã‚Šã¾ã›ã‚“ g:working_path = ' . g:working_path
 	else
 		if a:opt == 0
 			silent! execute '!cd ' . g:working_path . ' & ctags -R -f .tags'
@@ -73,6 +73,4 @@ if has('cscope')
 	command! CscopeGenerate  : call CscopeEditor( 0 )
 	command! CscopeDelete    : call CscopeEditor( 1 )
 endif
-
- 
 

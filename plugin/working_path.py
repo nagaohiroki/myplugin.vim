@@ -10,7 +10,7 @@ def get_svn_working_path():
     svninfo = os.popen( 'svn info') .read()
     svninfosplit = svninfo.split( '\n' )
     count = len( svninfosplit )
-    if count == 14:
+    if count >= 2:
         working_path = svninfosplit[1]
         result = working_path[24:]
         return result
@@ -47,7 +47,7 @@ if __name__ == '__main__':
         
     git_path = get_git_working_path()
     if git_path != '':
-        py_working_path = git_path
+       py_working_path = git_path
 
     py2vim( 'py_working_path' )
     

@@ -15,8 +15,9 @@ let g:myplugin_path=expand('<sfile>:p:h')
 function! GetWorkingPath()
 	if has('python')
 		" project root path python ver
-		execute 'pyf ' . g:myplugin_path . '/working_path.py'
-		let g:working_path=py_working_path
+		execute 'pyf ' . g:myplugin_path . '/../python/working_path.py'
+		let g:working_path=pyeval('WorkinPath().get_working_path()')
+
 	else
 		let l:git_root_path=substitute(system('git rev-parse --show-toplevel'),'\n',"","g")
 		let l:svn_root_path=substitute(system('svn info | grep ''Working''')[24:-1],'\n',"","g")

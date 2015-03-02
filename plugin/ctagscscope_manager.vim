@@ -1,4 +1,11 @@
 ﻿scriptencoding utf-8
+
+if exists('g:not_used_ctagscscope'	)
+	if g:not_used_ctagscscope ==1
+		finish
+	endif
+endif
+
 if exists( 'g:local_working_path' )
 	execute 'set tags=' . g:local_working_path . '/.tags'
 

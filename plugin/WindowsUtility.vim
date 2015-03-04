@@ -9,9 +9,9 @@ if has('win32')
 	command! SvnRevert :silent! !svn revert %
 
 	" git
-	command! GigLog :silent! !TortoiseGitProc /command:log /path:%
-	command! GigDiff :silent! !TortoiseGitProc /command:diff /path:%
-	command! GigRevert :silent! !git checkout %
+	command! GitLog :silent! !TortoiseGitProc /command:log /path:%
+	command! GitDiff :silent! !TortoiseGitProc /command:diff /path:%
+	command! GitRevert :silent! !git checkout %
 
 	" oepn windows explorer
 	command! Wex :silent! !explorer /select,%

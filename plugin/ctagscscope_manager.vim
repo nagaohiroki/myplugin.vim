@@ -7,15 +7,15 @@ if exists('g:not_used_ctagscscope'	)
 endif
 
 if exists( 'g:local_working_path' )
-	execute 'set tags=' . g:local_working_path . '/.tags'
+	execute 'set tags=' . g:local_working_path . '/tags'
 
 	" Ctags
 	function! CtagsEditor( opt )
 		if a:opt == 0
-			silent! execute '!cd ' . g:local_working_path . ' & ctags -R -f .tags'
-			execute 'set tags=' . g:local_working_path . '/.tags'
+			silent! execute '!cd ' . g:local_working_path . ' & ctags -R'
+			execute 'set tags=' . g:local_working_path . '/tags'
 		elseif a:opt == 1
-			silent! execute '!rm ' . g:local_working_path . '/.tags'
+			silent! execute '!rm ' . g:local_working_path . '/tags'
 		endif
 	endfunction
 	command! CtagsGenerate   : call CtagsEditor( 0 )

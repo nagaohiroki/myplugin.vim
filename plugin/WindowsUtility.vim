@@ -17,7 +17,4 @@ if has('win32')
 	" oepn windows explorer
 	command! Wex :silent! !explorer /select,%
 
-	" path cut
-	nnoremap <F3> $F/v0dj
-
 endif

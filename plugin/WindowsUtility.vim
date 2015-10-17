@@ -101,7 +101,7 @@ function! VCRevert(path)
 		let l:command = ' revert '
 	endif
 
-	echo system( l:command . l:command . a:path)
+	echo system( l:vcType . l:command . a:path)
 endfunction
 
 " ----------------------------------------------------------------------

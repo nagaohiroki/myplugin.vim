@@ -2,43 +2,120 @@
 " windows utility
 " ---------------------------------------------------------------------
 " 
-if !has('win32') || exists('g:WinUtil_loaded')
+if !has('win32')
 	finish
 endif
 
-" Global
-let g:WinUtil_loaded = 1
+" ----------------------------------------------------------------------
+" function
+" ---------------------------------------------------------------------
+" VCType
+function! GetVCType()
+
+	let l:cdLocalPath = 'cd ' . expand('%:p:h') . ' & ' 
+
+	" git
+	let l:git = system(l:cdLocalPath . ' git rev-parse --show-toplevel')
+	let l:notgit = 'Not a git repository'
+ 	if(stridx(l:git, l:notgit) == -1)
+		return 'git'
+	endif
+
+	"svn
+	let l:svn = system(l:cdLocalPath . ' svn info')
+	let l:notsvn = 'is not a working copy'
+ 	if(stridx(l:svn, l:notsvn) == -1)
+		return 'svn'
+	endif
+
+	return 'none'
+
+endfunction
+
+" WorkingPath
+function! GetWorkingRootPath(vcType)
+
+	" git
+	if(a:vcType == 'git')
+		let l:gitCommand = system('git rev-parse --show-toplevel')
+		let l:gitWorkingPath = substitute(l:gitCommand, '\n', "", "g")
+		return l:gitWorkingPath
+	endif
+
+	" svn
+	if(a:vcType == 'svn')
+		let l:svnCommand = system('git rev-parse --show-toplevel')
+		let l:svnWorkingPath = substitute(l:svnCommand[24:-1], '\n', "", "g")
+		return l:svnWorkingPath
+	endif
+	echo ' Not compatible VCS'
+	return 'none'
+
+endfunction
 
 " TortoiseProc
-function! VCProc(com, path)
+function! VCProc(vcType, com, path)
 
-	let l:vcs = 'TortoiseProc'
-	if(g:vc_type == 'git')
+	if(a:vcType == 'none')
+		return
+	endif
+
+	if(a:vcType == 'git')
 		let l:vcs = 'TortoiseGitProc'
+	endif
+
+	if(a:vcType == 'svn')
+		let l:vcs = 'TortoiseProc'
 	endif
 
 	echo system(l:vcs . ' /command:' . a:com . ' /path:"' . a:path . '"')
 endfunction
 
-" RevertCommmand
-function! VCRevert(path)
-	let l:vcs = 'svn revert '
-	if(g:vc_type == 'git')
-		let l:vcs = 'git checkout '
-	endif
-	echo system(l:vcs . a:path)
+" 
+function! VCProcLocal(com)
+	let l:vcType = GetVCType()
+	call VCProc(l:vcType, a:com, expand('%:p'))
 endfunction
 
-" Command
-command! VCLog call VCProc('log', expand('%:p')) 
-command! VCDiff call VCProc('diff', expand('%:p')) 
-command! VCRevert call VCRevert( expand('%:p'))
+"
+function! VCProcRoot(com)
+	let l:vcType = GetVCType()
+	let l:rootPath = GetWorkingRootPath(l:vcType)
+	call VCProc(l:vcType, a:com, l:vcType)
+endfunction
 
-command! VCRootRevert call VCProc( 'revert', g:cv_root )
-command! VCRootLog    call VCProc( 'log', g:vc_root )
-command! VCRootCommit call VCProc( 'commit', g:vc_root )
+" RevertCommmand
+function! VCRevert(path)
+	
+	let l:vcType = GetVCType()
+
+	if(l:vcType == 'none')
+		return
+	endif
+
+	if(l:vcType == 'git')
+		let l:command = ' checkout '
+	endif
+
+	if(l:vcType == 'svn')
+		let l:command = ' revert '
+	endif
+
+	echo system( l:command . l:command . a:path)
+endfunction
+
+" ----------------------------------------------------------------------
+" Command
+" ---------------------------------------------------------------------
+
+command! VCLog call VCProcLocal('log') 
+command! VCDiff call VCProcLocal('diff') 
+command! VCRevert call VCRevert(expand('%:p'))
+
+command! VCRootRevert call VCProcRoot( 'revert' )
+command! VCRootLog    call VCProcRoot( 'log' )
+command! VCRootCommit call VCProcRoot( 'commit' )
 
 " oepn windows explorer
-command! Wex :silent! echo system('explorer /select,' . expand('%'))
-
+command! Wex echo system('explorer /select,' . expand('%'))
 

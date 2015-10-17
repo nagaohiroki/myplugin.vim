@@ -72,13 +72,13 @@ function! VCProc(vcType, com, path)
 	echo system(l:cmd)
 endfunction
 
-" 
+" CurrentFile
 function! VCProcLocal(com)
 	let l:vcType = GetVCType()
 	call VCProc(l:vcType, a:com, expand('%:p'))
 endfunction
 
-"
+" RootDirectory
 function! VCProcRoot(com)
 	let l:vcType = GetVCType()
 	let l:rootPath = GetWorkingRootPath(l:vcType)

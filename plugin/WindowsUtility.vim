@@ -119,4 +119,5 @@ command! VCRootCommit call VCProcRoot('commit')
 
 " oepn windows explorer
 command! Wex echo system('explorer /select,' . expand('%'))
+command! WexRoot echo system('explorer /select,' . GetWorkingRootPath(GetVCType()))
 

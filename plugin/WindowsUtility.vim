@@ -68,7 +68,8 @@ function! VCProc(vcType, com, path)
 		let l:vcs = 'TortoiseProc'
 	endif
 
-	echo system(l:vcs . ' /command:' . a:com . ' /path:"' . a:path . '"')
+	let l:cmd = l:vcs . ' /command:' . a:com . ' /path:"' . a:path . '"'
+	echo system(l:cmd)
 endfunction
 
 " 
@@ -81,7 +82,7 @@ endfunction
 function! VCProcRoot(com)
 	let l:vcType = GetVCType()
 	let l:rootPath = GetWorkingRootPath(l:vcType)
-	call VCProc(l:vcType, a:com, l:vcType)
+	call VCProc(l:vcType, a:com, l:rootPath)
 endfunction
 
 " RevertCommmand
@@ -112,9 +113,9 @@ command! VCLog call VCProcLocal('log')
 command! VCDiff call VCProcLocal('diff') 
 command! VCRevert call VCRevert(expand('%:p'))
 
-command! VCRootRevert call VCProcRoot( 'revert' )
-command! VCRootLog    call VCProcRoot( 'log' )
-command! VCRootCommit call VCProcRoot( 'commit' )
+command! VCRootRevert call VCProcRoot('revert')
+command! VCRootLog    call VCProcRoot('log')
+command! VCRootCommit call VCProcRoot('commit')
 
 " oepn windows explorer
 command! Wex echo system('explorer /select,' . expand('%'))

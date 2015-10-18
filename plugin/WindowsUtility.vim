@@ -113,9 +113,9 @@ command! VCLog call VCProcLocal('log')
 command! VCDiff call VCProcLocal('diff') 
 command! VCRevert call VCRevert(expand('%:p'))
 
-command! VCRootRevert call VCProcRoot('revert')
-command! VCRootLog    call VCProcRoot('log')
-command! VCRootCommit call VCProcRoot('commit')
+command! VCRevertRoot call VCProcRoot('revert')
+command! VCLogRoot    call VCProcRoot('log')
+command! VCCommitRoot call VCProcRoot('commit')
 
 " oepn windows explorer
 command! Wex echo system('explorer /select,' . expand('%'))

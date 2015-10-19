@@ -44,8 +44,8 @@ function! GetWorkingRootPath(vcType)
 
 	" svn
 	if(a:vcType == 'svn')
-		let l:svnCommand = system('git rev-parse --show-toplevel')
-		let l:svnWorkingPath = substitute(l:svnCommand[24:-1], '\n', '', 'g')
+		let l:svnCommand = system('svn info | grep ''Working''')
+		let l:svnWorkingPath = substitute(l:svnCommand[24:-1],'\n', '', 'g')
 		return l:svnWorkingPath
 	endif
 	echo ' Not compatible VCS'
@@ -108,6 +108,8 @@ endfunction
 " ----------------------------------------------------------------------
 " Command
 " ---------------------------------------------------------------------
+command! EchoRoot echo GetWorkingRootPath(GetVCType())
+command! EchoVC echo GetVCType()
 
 command! VCLog call VCProcLocal('log') 
 command! VCDiff call VCProcLocal('diff') 
@@ -120,4 +122,3 @@ command! VCCommitRoot call VCProcRoot('commit')
 " oepn windows explorer
 command! Wex echo system('explorer /select,' . expand('%'))
 command! WexRoot echo system('explorer "' . substitute(GetWorkingRootPath(GetVCType()),'/','\\','g') . '"' )
-

@@ -68,8 +68,9 @@ function! VCProc(vcType, com, path)
 		let l:vcs = 'TortoiseProc'
 	endif
 
-	let l:cmd = l:vcs . ' /command:' . a:com . ' /path:"' . a:path . '"'
-	echo system(l:cmd)
+	let l:cmd = 'start ' . l:vcs . ' /command:' . a:com . ' /path:"' . a:path . '"'
+	execute '!' . l:cmd
+	" echo system(l:cmd)
 endfunction
 
 " CurrentFile

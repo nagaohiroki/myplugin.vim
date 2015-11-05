@@ -121,5 +121,5 @@ command! VCLogRoot    call VCProcRoot('log')
 command! VCCommitRoot call VCProcRoot('commit')
 
 " oepn windows explorer
-command! Wex echo system('explorer /select,' . expand('%'))
+command! Wex echo system('explorer /select,' . expand('%:p'))
 command! WexRoot echo system('explorer "' . substitute(GetWorkingRootPath(GetVCType()),'/','\\','g') . '"' )

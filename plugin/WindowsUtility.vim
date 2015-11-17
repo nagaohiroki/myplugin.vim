@@ -112,13 +112,13 @@ endfunction
 command! EchoRoot echo GetWorkingRootPath(GetVCType())
 command! EchoVC echo GetVCType()
 
-command! VCLog call VCProcLocal('log') 
-command! VCDiff call VCProcLocal('diff') 
-command! VCRevert call VCRevert(expand('%:p'))
+command! VLog call VCProcLocal('log') 
+command! VDiff call VCProcLocal('diff') 
+command! VRevert call VCRevert(expand('%:p'))
 
-command! VCRevertRoot call VCProcRoot('revert')
-command! VCLogRoot    call VCProcRoot('log')
-command! VCCommitRoot call VCProcRoot('commit')
+command! VRevertRoot call VCProcRoot('revert')
+command! VLogRoot    call VCProcRoot('log')
+command! VCommitRoot call VCProcRoot('commit')
 
 " oepn windows explorer
 command! Wex echo system('explorer /select,' . expand('%:p'))

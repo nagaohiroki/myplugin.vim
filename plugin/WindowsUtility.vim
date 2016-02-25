@@ -97,13 +97,15 @@ function! VCRevert(path)
 
 	if(l:vcType == 'git')
 		let l:command = ' checkout '
+		let l:mark = ''
 	endif
 
 	if(l:vcType == 'svn')
 		let l:command = ' revert '
+		let l:mark = '@'
 	endif
 
-	echo system( l:vcType . l:command . a:path)
+	echo system( l:vcType . l:command .  a:path . l:mark)
 endfunction
 
 " ----------------------------------------------------------------------

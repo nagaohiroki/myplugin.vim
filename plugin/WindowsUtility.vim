@@ -55,7 +55,6 @@ endfunction
 
 " TortoiseProc
 function! VCProc(vcType, com, path)
-
 	if(a:vcType == 'none')
 		return
 	endif
@@ -75,12 +74,14 @@ endfunction
 
 " CurrentFile
 function! VCProcLocal(com)
+	CdCurrent
 	let l:vcType = GetVCType()
 	call VCProc(l:vcType, a:com, expand('%:p'))
 endfunction
 
 " RootDirectory
 function! VCProcRoot(com)
+	CdCurrent
 	let l:vcType = GetVCType()
 	let l:rootPath = GetWorkingRootPath(l:vcType)
 	call VCProc(l:vcType, a:com, l:rootPath)
@@ -116,7 +117,7 @@ command! EchoVC echo GetVCType()
 
 command! VLog call VCProcLocal('log') 
 command! VDiff call VCProcLocal('diff') 
-command! VRevert call VCRevert(expand('%:p'))
+command! VRevert call VCRevert(expand('%'))
 
 command! VRevertRoot call VCProcRoot('revert')
 command! VLogRoot    call VCProcRoot('log')

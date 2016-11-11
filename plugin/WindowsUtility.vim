@@ -89,7 +89,7 @@ endfunction
 
 " RevertCommmand
 function! VCRevert(path)
-	
+	CdCurrent
 	let l:vcType = GetVCType()
 
 	if(l:vcType == 'none')

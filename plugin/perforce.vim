@@ -4,6 +4,7 @@
 " windows example
 " set P4CLIENT=UE4PROJ
 " set P4DIFF=C:\Program Files\WinMerge\WinMergeU.exe
+" set P4PASSWD=**
 " --------------------------------------------------------------------
 if exists("g:perforce_vim")
   finish

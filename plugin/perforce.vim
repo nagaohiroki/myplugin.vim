@@ -18,5 +18,6 @@ command! P4revert cd %:h | call system('p4 revert -c default "' . fnameescape(ex
 command! P4diff cd %:h | call system(s:win_start . 'p4 diff "' . fnameescape(expand('%')) . '"')
 command! P4pending cd %:h | echo system('p4 opened')
 command! P4cleanup cd %:h | call system('p4 revert -a -c default') | echo system('p4 opened')
+command! P4v execute '!start p4v -s "' . fnameescape(expand('%:p')) . '"'
 let &cpo = s:save_cpo
 unlet s:save_cpo

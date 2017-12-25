@@ -4,6 +4,9 @@
 if exists("g:perforce_vim")
   finish
 endif
+if !has('win32')
+  finish
+endif
 let g:perforce_vim=1
 let s:save_cpo = &cpo
 set cpo&vim
